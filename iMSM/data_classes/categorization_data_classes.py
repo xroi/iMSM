@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class iMSMSingleSimCategorization:
-    trajectory: np.ndarray[np.str_] # N_focal_component x k_closest x N_timepoints
+    trajectory: np.ndarray[np.str_] # N_focal_component x interaction_capacity x N_timepoints
     
 @dataclass
 class iMSMCategorization:

@@ -11,11 +11,11 @@ def _process_single_simulation(
     components: np.ndarray, 
     focal_component: str, 
     max_dist: float,
-    k_closest: int  # New argument
+    interaction_capacity: int
 ) -> iMSMSingleSimCategorization:
     """
     Worker function to process a single simulation trajectory.
-    Returns array of shape: [N_focal, k_closest, N_time]
+    Returns array of shape: [N_focal, interaction_capacity, N_time]
     """
     # 1. Identify Focal and Environment indices
     is_focal = np.char.startswith(components, focal_component)
@@ -34,8 +34,8 @@ def _process_single_simulation(
     n_time = focal_traj.shape[2]
     
     # Initialize result array with "Unbound"
-    # Shape Change: Now 3D array [N_focal, k_closest, N_time]
-    categorized_traj = np.full((n_focal, k_closest, n_time), "Unbound", dtype='U30')
+    # Shape Change: Now 3D array [N_focal, interaction_capacity, N_time]
+    categorized_traj = np.full((n_focal, interaction_capacity, n_time), "Unbound", dtype='U30')
     
     # If no environment exists, return all Unbound immediately
     if len(env_indices) == 0:
@@ -49,13 +49,13 @@ def _process_single_simulation(
         # Build KDTree on Environment beads
         tree = cKDTree(xyz_env)
         
-        # Query closest neighbors (k=k_closest) within max_dist
-        # dists and idxs shape: [N_focal, k_closest] (if k_closest > 1)
-        # If k_closest=1, cKDTree returns [N_focal], so we reshape to ensure consistency
-        dists, idxs = tree.query(xyz_focal, k=k_closest, distance_upper_bound=max_dist)
+        # Query closest neighbors (k=interaction_capacity) within max_dist
+        # dists and idxs shape: [N_focal, interaction_capacity] (if interaction_capacity > 1)
+        # If interaction_capacity=1, cKDTree returns [N_focal], so we reshape to ensure consistency
+        dists, idxs = tree.query(xyz_focal, k=interaction_capacity, distance_upper_bound=max_dist)
         
-        # Ensure shape is [N_focal, k_closest] even if k=1
-        if k_closest == 1:
+        # Ensure shape is [N_focal, interaction_capacity] even if k=1
+        if interaction_capacity == 1:
             dists = dists[:, np.newaxis]
             idxs = idxs[:, np.newaxis]
 
@@ -88,7 +88,7 @@ def _process_single_simulation(
 def default_categorize(iMSMInput: iMSMInput, iMSMConfig: iMSMConfig) -> iMSMCategorization:
     max_surface_dist = iMSMConfig.max_surface_dist
     n_cpus = iMSMConfig.n_cpus
-    k_closest = iMSMConfig.k_closest
+    interaction_capacity = iMSMConfig.interaction_capacity
     
     focal_comp = iMSMInput.focal_component
     comps = iMSMInput.components
@@ -105,7 +105,7 @@ def default_categorize(iMSMInput: iMSMInput, iMSMConfig: iMSMConfig) -> iMSMCate
                 comps, 
                 focal_comp, 
                 max_surface_dist,
-                k_closest  # Pass k_closest to the worker
+                interaction_capacity  # Pass interaction_capacity to the worker
             ): i for i, sim in enumerate(trajectories)
         }
         

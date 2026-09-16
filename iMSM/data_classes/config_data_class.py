@@ -37,7 +37,7 @@ class iMSMConfig:
     data_subset_mode: str = "time" # options: "time", "simulation"
     
     # --- Stage 1: Categorization ---
-    k_closest: int = 5
+    interaction_capacity: int = 5
     max_surface_dist: float = 1.0
     custom_categorization: Optional[Callable[[iMSMInput], iMSMCategorization]] = None
     

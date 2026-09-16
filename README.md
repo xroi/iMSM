@@ -58,8 +58,9 @@ The best way to get started with `iMSM` is through the interactive tutorials in 
 
 | Tutorial | Description |
 | :--- | :--- |
-| **[`tutorials/1_chignolin.ipynb`](tutorials/1_chignolin.ipynb)** | **General Biomolecular Dynamics** — Step-by-step walkthrough applying iMSM to a trajectory of the fast-folding peptide Chignolin, illustrating its use beyond the manuscript's nuclear transport applications. |
-| **[`tutorials/2_NPC.ipynb`](tutorials/2_NPC.ipynb)** | **NPC Transport Pipeline** — End-to-end execution of interaction categorization, embedding, clustering, and kinetic graph construction for nuclear transport trajectories. |
+| **[`tutorials/1_NPC.ipynb`](tutorials/1_NPC.ipynb)** | **Flagship NPC Transport Pipeline** — End-to-end execution of interaction categorization, embedding, clustering, and kinetic graph construction for nuclear transport trajectories. |
+| **[`tutorials/2_chignolin.ipynb`](tutorials/2_chignolin.ipynb)** | **General Biomolecular Dynamics** — Step-by-step walkthrough applying iMSM to the fast-folding Chignolin peptide mini-protein trajectory. |
+| **[`tutorials/3_fg_sliding.ipynb`](tutorials/3_fg_sliding.ipynb)** | **FG-Repeat Sliding Dynamics** — Construction of iMSM of FG repeat sliding on Kap95 surface (Figure 6). |
 
 ---
 
@@ -107,7 +108,7 @@ Scripts and helper libraries for reproducing the figures and videos in the manus
 ```
 .
 ├── iMSM/              # Core library (categorize, embed, cluster, msm, NPC extensions)
-├── tutorials/         # Getting-started Jupyter notebooks (Chignolin folding & NPC)
+├── tutorials/         # Getting-started Jupyter notebooks (NPC transport, Chignolin folding, & FG sliding)
 ├── figure_scripts/    # Reproducible scripts and helpers for manuscript figures
 ├── data/              # Simulation trajectories, transition matrices, and clustering data
 ├── plots/             # Rendered output figures, panels, and video artifacts

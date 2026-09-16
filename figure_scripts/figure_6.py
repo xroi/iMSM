@@ -45,7 +45,7 @@ from figure_fg_sliding_helpers import (
 
 # params = setup_fg_sliding_params(
 #     window_size=500,
-#     k_closest=5,
+#     interaction_capacity=5,
 #     max_surface_dist=1.0,
 #     n_clusters=5,
 #     merge_cluster_threshold=0.1,
@@ -122,7 +122,7 @@ fig_b = plot_fg_spatial_network(
     heat6_range=(218, 232),
     focal_fg_alphacarbon=(88, 91),
     native_pdb_path="data/nup_sims/fsfgx2/output_from_0_nowat.dms.pdb",
-    k_closest=5,
+    interaction_capacity=5,
     max_surface_dist=1.0,
     native_similarity_threshold=0.75,
     top_n_print=10,
@@ -175,7 +175,7 @@ fig_d = plot_fg_spatial_network(
     heat6_range=(218, 232),
     focal_fg_alphacarbon=(88, 91),
     native_pdb_path="data/nup_sims/fsfgx2/output_from_0_nowat.dms.pdb",
-    k_closest=5,
+    interaction_capacity=5,
     max_surface_dist=1.0,
     native_similarity_threshold=0.75,
     top_n_print=10,

@@ -67,7 +67,7 @@ class iMSMConfig:
     load_md_ignored_nup_types: List[str] = field(default_factory=list)
     
     # --- Stage 3: Categorization ---
-    microstate_k: int = 5
+    interaction_capacity: int = 5
     max_surface_dist_nm: float = 1.0
     split_nc: bool = True
     custom_fg_coords_path: Optional[str] = None # For sims w/ multiple kap types, to not redo loading of FGs
@@ -271,7 +271,7 @@ def stage_03_categorize(params):
         fg_coords_path_prefix=fgs_path,
         step=1,
         save_file_path=str(_cp(params, "3_categorized.pickle")),
-        k=params['MICROSTATE_K'],
+        k=params['INTERACTION_CAPACITY'],
         diffuser_radius_nm=params['LOAD_MD_KAP_RADIUS']/10,
         max_surface_distance_nm=params['MAX_SURFACE_DIST_NM'],
         split_nc=params['SPLIT_NC']

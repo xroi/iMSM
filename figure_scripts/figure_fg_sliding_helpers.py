@@ -82,7 +82,7 @@ def create_imsm_input(
 def create_imsm_config(
     checkpoints_path: str,
     window_size: int,
-    k_closest: int,
+    interaction_capacity: int,
     max_surface_dist: float,
     n_clusters: int,
     merge_cluster_threshold: float,
@@ -93,7 +93,7 @@ def create_imsm_config(
     """Create an iMSMConfig instance with explicit parameters."""
     config: iMSMConfig = iMSMConfig(checkpoints_path=checkpoints_path)
     config.window_size = window_size
-    config.k_closest = k_closest
+    config.interaction_capacity = interaction_capacity
     config.max_surface_dist = max_surface_dist
     config.n_clusters = n_clusters
     config.merge_cluster_threshold = merge_cluster_threshold
@@ -186,7 +186,7 @@ def setup_fg_sliding_data(
 
 def setup_fg_sliding_params(
     window_size: int,
-    k_closest: int,
+    interaction_capacity: int,
     max_surface_dist: float,
     n_clusters: int,
     merge_cluster_threshold: float,
@@ -200,7 +200,7 @@ def setup_fg_sliding_params(
     ns_per_frame: float = ns_per_frame_base * stride
     return {
         "window_size": window_size,
-        "k_closest": k_closest,
+        "interaction_capacity": interaction_capacity,
         "max_surface_dist": max_surface_dist,
         "n_clusters": n_clusters,
         "merge_cluster_threshold": merge_cluster_threshold,
@@ -229,7 +229,7 @@ def run_fg_sliding_imsm(
         run_config: iMSMConfig = create_imsm_config(
             checkpoints_path=f"{run_chk_path}/",
             window_size=int(params["window_size"]),  # type: ignore[arg-type]
-            k_closest=int(params["k_closest"]),  # type: ignore[arg-type]
+            interaction_capacity=int(params["interaction_capacity"]),  # type: ignore[arg-type]
             max_surface_dist=float(params["max_surface_dist"]),  # type: ignore[arg-type]
             n_clusters=int(params["n_clusters"]),  # type: ignore[arg-type]
             merge_cluster_threshold=float(params["merge_cluster_threshold"]),  # type: ignore[arg-type]
@@ -353,7 +353,7 @@ def compute_native_states_and_profile(
     native_pdb_path: str,
     kap_n_ca: int,
     focal_fg_alphacarbon: int | tuple[int, int] | list[int] | str,
-    k_closest: int,
+    interaction_capacity: int,
     max_surface_dist: float,
     unique_components: np.ndarray,
     cluster_centers: np.ndarray,
@@ -386,7 +386,7 @@ def compute_native_states_and_profile(
     fake_config: iMSMConfig = iMSMConfig(
         checkpoints_path=".",
         window_size=window_size,
-        k_closest=k_closest,
+        interaction_capacity=interaction_capacity,
         max_surface_dist=max_surface_dist,
         n_cpus=1,
     )
@@ -563,7 +563,7 @@ def visualize_kap_states_and_rates(
     heat6_range: tuple[int, int],
     focal_fg_alphacarbon: int | tuple[int, int] | list[int] | str,
     native_pdb_path: str,
-    k_closest: int,
+    interaction_capacity: int,
     max_surface_dist: float,
     native_similarity_threshold: float,
     top_n_print: int,
@@ -624,7 +624,7 @@ def visualize_kap_states_and_rates(
         native_pdb_path=native_pdb_path,
         kap_n_ca=kap_n_ca,
         focal_fg_alphacarbon=focal_fg_alphacarbon,
-        k_closest=k_closest,
+        interaction_capacity=interaction_capacity,
         max_surface_dist=max_surface_dist,
         unique_components=comps,
         cluster_centers=cluster_centers,
@@ -1215,7 +1215,7 @@ def plot_fg_spatial_network(
     heat6_range: tuple[int, int],
     focal_fg_alphacarbon: int | tuple[int, int] | list[int] | str,
     native_pdb_path: str,
-    k_closest: int,
+    interaction_capacity: int,
     max_surface_dist: float,
     native_similarity_threshold: float,
     top_n_print: int,
@@ -1250,7 +1250,7 @@ def plot_fg_spatial_network(
         heat6_range=heat6_range,
         focal_fg_alphacarbon=focal_fg_alphacarbon,
         native_pdb_path=native_pdb_path,
-        k_closest=k_closest,
+        interaction_capacity=interaction_capacity,
         max_surface_dist=max_surface_dist,
         native_similarity_threshold=native_similarity_threshold,
         top_n_print=top_n_print,

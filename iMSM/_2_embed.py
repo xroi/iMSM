@@ -7,8 +7,8 @@ from iMSM.data_classes.config_data_class import iMSMConfig
 
 def divide_to_sections(categorized_trajectory, window_size):
     """
-    categorized_trajectories: shape [k_closest, time]
-    return: shape [k_closest * window_size, n_sections(=time//window_size)]
+    categorized_trajectories: shape [interaction_capacity, time]
+    return: shape [interaction_capacity * window_size, n_sections(=time//window_size)]
     """
     n_closest, n_time = categorized_trajectory.shape
     n_sections = n_time // window_size
@@ -20,8 +20,8 @@ def divide_to_sections(categorized_trajectory, window_size):
     
 def multi_divide_to_sections(categorized_trajectories, window_size):
     """
-    categorized_trajectories: shape [n_diffusers, k_closest, time]
-    return: shape [n_diffusers, k_closest * window_size, n_sections(=time//window_size)]
+    categorized_trajectories: shape [n_diffusers, interaction_capacity, time]
+    return: shape [n_diffusers, interaction_capacity * window_size, n_sections(=time//window_size)]
     """
     n_diffusers, n_closest, n_time = categorized_trajectories.shape
     divided_trajectories = np.zeros((n_diffusers, n_closest * window_size, n_time // window_size), dtype='U20') # string array
@@ -55,7 +55,7 @@ def default_embed(categorization: iMSMCategorization, iMSMConfig: iMSMConfig) ->
     
     # todo potentially parallelize this loop (its fast though)
     for single_sim_categorized in categorized_single_sim:
-        categorized_trajectory = single_sim_categorized.trajectory # shape [N_focal, k_closest, N_time]
+        categorized_trajectory = single_sim_categorized.trajectory # shape [N_focal, interaction_capacity, N_time]
         divided_trajectories = multi_divide_to_sections(categorized_trajectory, window_size)
         embedded_sections = np.zeros((divided_trajectories.shape[0], n_unique_components, divided_trajectories.shape[2])) # (n_diffusers, n_unique_components, n_sections)
         for i_diffuser in range(divided_trajectories.shape[0]):
